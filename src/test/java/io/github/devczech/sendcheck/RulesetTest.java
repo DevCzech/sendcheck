@@ -21,16 +21,46 @@ class RulesetTest {
     }
 
     @Test
-    void scan() {
+    void scanSsn() {
         final String testInput = "xyz012-01-0124xyz";
-        final ScanResult result = ruleset.scan(testInput);
+        final List<ScanResult> results = ruleset.scan(testInput);
 
-        Assertions.assertNotNull(result);
+        Assertions.assertNotNull(results);
 
-        List<String> categories = result.getCategories();
-        List<String> names = result.getNames();
+        Assertions.assertEquals(1, results.size());
 
-        Assertions.assertTrue(categories.contains("identity"));
-        Assertions.assertTrue(names.contains("ssn"));
+        ScanResult result = results.get(0);
+
+        String category = result.getCategory();
+        String name = result.getName();
+        long line = result.getLine();
+        long position = result.getPosition();
+
+        Assertions.assertEquals("identity", category);
+        Assertions.assertEquals("ssn", name);
+        Assertions.assertEquals(0, line);
+        Assertions.assertEquals(3, position);
+    }
+
+    @Test
+    void scanVisa() {
+        final String testInput = "xyz4123412341234123xyz"; // Visa card numbers start with a 4
+        final List<ScanResult> results = ruleset.scan(testInput);
+
+        Assertions.assertNotNull(results);
+
+        Assertions.assertEquals(1, results.size());
+
+        ScanResult result = results.get(0);
+
+        String category = result.getCategory();
+        String name = result.getName();
+        long line = result.getLine();
+        long position = result.getPosition();
+
+        Assertions.assertEquals("finance", category);
+        Assertions.assertEquals("visa", name);
+        Assertions.assertEquals(0, line);
+        Assertions.assertEquals(3, position);
     }
 }

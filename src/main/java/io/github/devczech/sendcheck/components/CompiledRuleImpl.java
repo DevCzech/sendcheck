@@ -1,5 +1,6 @@
 package io.github.devczech.sendcheck.components;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CompiledRuleImpl implements CompiledRule {
@@ -23,8 +24,9 @@ public class CompiledRuleImpl implements CompiledRule {
     }
 
     @Override
-    public boolean find(String input) {
-        return this.pattern.matcher(input).find();
+    public int find(String input) {
+        final Matcher matcher = this.pattern.matcher(input);
+        return matcher.find() ? matcher.start() : -1;
     }
 
     @Override

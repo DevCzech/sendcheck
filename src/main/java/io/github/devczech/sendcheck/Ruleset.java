@@ -34,18 +34,21 @@ public final class Ruleset {
         return new Ruleset(compiledRules);
     }
 
-    public ScanResult scan(String text) {
-        final List<String> categories = new ArrayList<>();
-        final List<String> names = new ArrayList<>();
+    public List<ScanResult> scan(String text) {
+        final List<ScanResult> scanResults = new ArrayList<>();
+        final String[] lines = text.split(System.lineSeparator());
 
-        for (CompiledRule rule : this.rules) {
-            if (rule.find(text)) {
-                categories.add(rule.getCategory());
-                names.add(rule.getName());
+        for (CompiledRule rule : rules) {
+            for (int i = 0; i < lines.length; i++) {
+                String line = lines[i];
+                int matchIndex = rule.find(line);
+                if (matchIndex > -1) {
+                    scanResults.add(new ScanResultImpl(rule.getCategory(), rule.getName(), i, matchIndex));
+                }
             }
         }
 
-        return new ScanResultImpl(categories, names);
+        return scanResults;
     }
 
     public ScanResult scan(Path inputFile) {

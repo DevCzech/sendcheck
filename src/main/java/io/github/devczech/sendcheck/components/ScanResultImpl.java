@@ -1,23 +1,35 @@
 package io.github.devczech.sendcheck.components;
 
-import java.util.List;
-
 public class ScanResultImpl implements ScanResult {
-    private final List<String> categories;
-    private final List<String> names;
+    private final String category;
+    private final String name;
+    private final long line;
+    private final long position;
 
-    public ScanResultImpl(List<String> categories, List<String> names) {
-        this.categories = categories;
-        this.names = names;
+    public ScanResultImpl(String category, String name, long line, long position) {
+        this.category = category;
+        this.name = name;
+        this.line = line;
+        this.position = position;
     }
 
     @Override
-    public List<String> getCategories() {
-        return this.categories;
+    public String getCategory() {
+        return this.category;
     }
 
     @Override
-    public List<String> getNames() {
-        return this.names;
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public long getLine() {
+        return line;
+    }
+
+    @Override
+    public long getPosition() {
+        return position;
     }
 }
