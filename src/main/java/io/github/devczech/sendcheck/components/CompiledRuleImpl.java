@@ -1,5 +1,7 @@
 package io.github.devczech.sendcheck.components;
 
+import java.util.List;
+import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -30,9 +32,9 @@ public class CompiledRuleImpl implements CompiledRule {
     }
 
     @Override
-    public int find(String input) {
+    public List<Integer> find(String input) {
         final Matcher matcher = this.pattern.matcher(input);
-        return matcher.find() ? matcher.start() : -1;
+        return matcher.results().map(MatchResult::start).toList();
     }
 
     @Override

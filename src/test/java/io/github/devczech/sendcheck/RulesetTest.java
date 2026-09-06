@@ -63,4 +63,38 @@ class RulesetTest {
         Assertions.assertEquals(0, line);
         Assertions.assertEquals(3, position);
     }
+
+    @Test
+    void scanVisaMultiple() {
+        final String testInput = "xyz4123412341234123xyz4123412341234123xyz"; // Visa card numbers start with a 4
+        final List<ScanResult> results = ruleset.scan(testInput);
+
+        Assertions.assertNotNull(results);
+
+        Assertions.assertEquals(2, results.size());
+
+        ScanResult result = results.get(0);
+
+        String category = result.getCategory();
+        String name = result.getName();
+        long line = result.getLine();
+        long position = result.getPosition();
+
+        Assertions.assertEquals("finance", category);
+        Assertions.assertEquals("visa", name);
+        Assertions.assertEquals(0, line);
+        Assertions.assertEquals(3, position);
+
+        result = results.get(1);
+
+        category = result.getCategory();
+        name = result.getName();
+        line = result.getLine();
+        position = result.getPosition();
+
+        Assertions.assertEquals("finance", category);
+        Assertions.assertEquals("visa", name);
+        Assertions.assertEquals(0, line);
+        Assertions.assertEquals(22, position);
+    }
 }

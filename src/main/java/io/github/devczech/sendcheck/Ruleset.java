@@ -40,9 +40,9 @@ public final class Ruleset {
 
         for (CompiledRule rule : rules) {
             for (int i = 0; i < lines.length; i++) {
-                String line = lines[i];
-                int matchIndex = rule.find(line);
-                if (matchIndex > -1) {
+                final String line = lines[i];
+                final List<Integer> matchIndices = rule.find(line);
+                for (int matchIndex : matchIndices) {
                     scanResults.add(new ScanResultImpl(rule.getCategory(), rule.getName(), i, matchIndex));
                 }
             }
