@@ -28,6 +28,14 @@ public final class Ruleset {
 
         final List<CompiledRule> compiledRules = new ArrayList<>();
         for (String line : lines) {
+            if (line.startsWith("#")) {
+                continue;
+            }
+
+            if (line.isBlank()) {
+                continue;
+            }
+
             compiledRules.add(compiledRuleFactory.apply(line));
         }
 
