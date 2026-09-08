@@ -28,11 +28,11 @@ public final class Ruleset {
 
         final List<CompiledRule> compiledRules = new ArrayList<>();
         for (String line : lines) {
-            if (line.startsWith("#")) {
+            if (line.startsWith("#")) { // Lines starting with a # are comments
                 continue;
             }
 
-            if (line.isBlank()) {
+            if (line.isBlank()) { // Blank lines should be skipped to avoid complicating the parsing logic
                 continue;
             }
 
